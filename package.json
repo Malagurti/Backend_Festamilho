@@ -1,0 +1,25 @@
+{
+  "name": "Backend_Festamilho",
+  "version": "1.0.0",
+  "description": "Backend_Festamilho",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Malagurti/Backend_Festamilho.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Malagurti/Backend_Festamilho/issues"
+  },
+  "homepage": "https://github.com/Malagurti/Backend_Festamilho#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongoose": "^5.0.6"
+  }
+}
