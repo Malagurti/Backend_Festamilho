@@ -15,4 +15,7 @@ const AvaliacaoSchema = new mogoose.Schema({
     }
 
 
- })
+ });
+
+ const Avaliacao = mongoose.model('Avaliacao', AvaliacaoSchema);
+ module.exports = Avaliacao;
