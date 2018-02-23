@@ -1,11 +1,7 @@
 const mongoose = require('../database');
 
 const CursoSchema = new mongoose.Schema({
-    id: {
-        type: Number,
-        unique: true,
-        required: true,
-    },
+ 
     nome:{
         type: String,
         required: true,
