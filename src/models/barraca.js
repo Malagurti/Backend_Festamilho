@@ -2,13 +2,8 @@ const mongoose = require("../database");
 
 const BarracaSchema = new mongoose.Schema({
 
-    id:{
-        type: String,
-        required: true,
-        unique: true,
-    },
-
-    nome:{
+  
+      nome:{
         type: String,
         required: true,
     },
