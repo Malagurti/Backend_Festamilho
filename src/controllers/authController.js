@@ -41,11 +41,11 @@ router.post('/autenticacao', async (req, res)=> {
 
     usuario.senha = undefined;
 
-    const token = jwt.sign( {id: user.id}, authConfig.secret, {
+    const token = jwt.sign( {id: usuario.id}, authConfig.secret, {
         expiresIn: 40000,
     }); 
 
-    res.send ({ usuario });
+    res.send ({ usuario, token });
 });
 
 module.exports = app => app.use('/auth', router);
