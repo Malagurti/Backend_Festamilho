@@ -1,11 +1,12 @@
-const mongoose = require("../database");
+const mongoose = require('../database');
 
 const BarracaSchema = new mongoose.Schema({
 
   
-      nome:{
+    nome:{
         type: String,
         required: true,
+        unique: true,
     },
 
     curso:{
@@ -20,7 +21,7 @@ const BarracaSchema = new mongoose.Schema({
 
     cardapio:{
         type: String,
-        required: false,
+       
     },
     formapagamento:{
         type: String,
@@ -29,5 +30,5 @@ const BarracaSchema = new mongoose.Schema({
 
 });
 
-const Barraca = new mongoose.model('Barraca', BarracaSchema);
+const Barraca = mongoose.model('Barraca', BarracaSchema);
 module.exports = Barraca;
