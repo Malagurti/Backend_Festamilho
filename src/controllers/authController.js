@@ -1,38 +1,43 @@
 const express = require('express');
 
-const User = require('../models/User');
+const bcrypt = require('bcryptjs');
 
-const Barraca = require('../models/Barraca')
+const Usuario = require('../models/Usuario');
+
 
 const router = express.Router();
 
-router.post('/registro/usuario', async (req, res)=> {
+router.post('/registro', async (req, res)=> {
     const { email } = req.body;
 
     try {
         
-        if (await User.findOne({ email }))
+        if (await Usuario.findOne({ email }))
             return res.status(400).send({error: 'Usuario ja Cadastrado'});
 
-        const user = await User.create(req.body);
+        const usuario = await Usuario.create(req.body);
 
-        user.senha = undefined;
+        usuario.senha = undefined;
 
-        return res.send({ user });
+        return res.send({ usuario });
     }
     catch (err) {
         return res.status(400).send({error: 'Falha de Cadastro'})
     }
 });
 
-router.post('/registro/barraca', async (req, res)=> {
-    try {
-        const barraca = await Barraca.create(req.body);
-        return res.send({ barraca });
-    }
-    catch (err) {
-        return res.status(400).send({error: 'Falha de Cadastro'})
-    }
+router.post('/autenticacao', async (req, res)=> {
+    const { email, senha} = req.body;
+
+    const usuario = await Usuario.findOne({ email }).select('+senha');
+
+    if (!usuario)
+        return res.status(400).send({error: 'Usuario inexistente'});
+
+    if(!await bcrypt.compare(senha, usuario.senha))
+        return res.status(400).send({error: 'Senha Incorreta'});
+
+    res.send ({ usuario });
 });
 
 module.exports = app => app.use('/auth', router);
