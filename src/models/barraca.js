@@ -13,6 +13,15 @@ const BarracaSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    semestre:{
+        type: String,
+        required: true,
+    },
+
+    periodo:{
+        type:String,
+        required: true,
+    },
 
     localizacao:{
         type: String,
