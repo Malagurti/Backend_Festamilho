@@ -1,4 +1,4 @@
-const mangoose = require('../database')
+const mongoose = require("../../database");
 
 const CardapioSchema = new mangoose.Schema({
     nomeprato:{

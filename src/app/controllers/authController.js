@@ -1,13 +1,17 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
-const authConfig = require('../config/auth');
-
-const Usuario = require('../models/Usuario');
-
-
+const authConfig = require('../../config/auth.json');
+const Usuario = require('../../app/models/Usuario');
 const router = express.Router();
+
+
+
+function tokengen(params = {}){
+   return jwt.sign( params, authConfig.secret, {
+        expiresIn: 40000,
+   });
+};
 
 router.post('/registro', async (req, res)=> {
     const { email } = req.body;
@@ -21,7 +25,10 @@ router.post('/registro', async (req, res)=> {
 
         usuario.senha = undefined;
 
-        return res.send({ usuario });
+        return res.send({ 
+            usuario,
+            token: tokengen({ id: usuario.id}), 
+        });
     }
     catch (err) {
         return res.status(400).send({error: 'Falha de Cadastro'})
@@ -45,7 +52,10 @@ router.post('/autenticacao', async (req, res)=> {
         expiresIn: 40000,
     }); 
 
-    res.send ({ usuario, token });
+    res.send ({ 
+        usuario, 
+        token: tokengen({ id: usuario.id }),
+     });
 });
 
 module.exports = app => app.use('/auth', router);

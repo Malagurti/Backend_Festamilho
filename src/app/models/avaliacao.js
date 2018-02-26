@@ -1,4 +1,4 @@
-const mogoose = require("../database");
+const mongoose = require("../../database");
 
 const AvaliacaoSchema = new mogoose.Schema({
     usuario:{
