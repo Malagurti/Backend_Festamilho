@@ -14,6 +14,13 @@ const UserSchema = new mongoose.Schema({
         required: true,
         lowercase: true,
     },
+
+    nivel:{
+        type: Number,
+        select: false,
+        require: true,
+        default: '1',
+    },
     senha:{
         type: String,
         required: true,
