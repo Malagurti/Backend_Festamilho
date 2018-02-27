@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const mailer = require('../../modules/mailer');
 
 const authConfig = require('../../config/auth.json');
 const Usuario = require('../../app/models/Usuario');
@@ -79,11 +80,55 @@ router.post('/recuperasenha', async (req ,res)=> {
                 senhaResetExpires: now,
             }
         });
-    console.log(token, now);
+
+        mailer.sendMail({
+            to: email,
+            from: 'danielmalagurti@gmail.com',
+            template: 'auth/recupera_senha',
+            context: { token },
+        }, (err) => {
+            if (err) 
+                
+                return res.status(400).send({error: 'Não foi possivel enviar o e-mail de recuperação'});
+            
+            return res.send();
+        })
+
     } catch (err) {
+       
         res.status(400).send({error: 'Erro na recuperação da senha, tente novamente'});
         
     };
+});
+
+router.post('/resetasenha', async (req, res) => {
+    const { email, token, senha} = req.body;
+
+    try {
+        const usuario = await Usuario.findOne({ email })
+         .select('+senhaResetToken senhaResetExpires');
+
+         if(!usuario)
+            return res.status(400).send({error: 'Usuario inexistente'});
+
+        if(token !== usuario.senhaResetToken)
+            return  res.status(400).send({error: 'Token invalido'});
+
+        const now = new Date();
+
+        if (now > usuario.senhaResetExpires)
+            return res.status(400).send({error: 'Seu token inspirou, por favor gere um novo'});
+
+        usuario.senha = senha;
+
+        await usuario.save();
+        res.send("Senha alterada com sucesso");
+
+    } catch (err) {
+        
+        res.status(400).send({error:"Não foi possivel resetar a senha, tente novamente"})
+        
+    }
 });
 
 module.exports = app => app.use('/auth', router);
