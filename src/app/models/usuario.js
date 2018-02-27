@@ -19,6 +19,15 @@ const UserSchema = new mongoose.Schema({
         required: true,
         select: false,
     },
+    senhaResetToken:{
+        type: String,
+        select: false,
+    },
+    senhaResetExpires:{
+        type: Date,
+        select: false,
+    },
+
     dataCreate:{
         type: Date,
         default: Date.now,

@@ -1,6 +1,8 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+
 const authConfig = require('../../config/auth.json');
 const Usuario = require('../../app/models/Usuario');
 const router = express.Router();
@@ -56,6 +58,32 @@ router.post('/autenticacao', async (req, res)=> {
         usuario, 
         token: tokengen({ id: usuario.id }),
      });
+});
+
+router.post('/recuperasenha', async (req ,res)=> {
+    const { email } = req.body;
+
+    try {
+        const usuario = await Usuario.findOne ({ email });
+
+        if (!usuario)
+            return res.status(400).send({error: "Usuario não cadastrado"});
+
+        const token = crypto.randomBytes(20).toString('hex');
+        const now = new Date();
+        now.setHours(now.getHours() + 1);
+
+        await Usuario.findByIdAndUpdate(usuario.id, {
+            '$set': {
+                senhaResetToken: token,
+                senhaResetExpires: now,
+            }
+        });
+    console.log(token, now);
+    } catch (err) {
+        res.status(400).send({error: 'Erro na recuperação da senha, tente novamente'});
+        
+    };
 });
 
 module.exports = app => app.use('/auth', router);
