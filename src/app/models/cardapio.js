@@ -14,6 +14,11 @@ const CardapioSchema = new mangoose.Schema({
         type: String,
         required: false,
     },
+    barraca:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Barraca,
+
+    },
     
     
 });
