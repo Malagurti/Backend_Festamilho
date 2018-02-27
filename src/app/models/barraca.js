@@ -32,9 +32,10 @@ const BarracaSchema = new mongoose.Schema({
         required: true,
     },
 
-    cardapio:[{
+    cardapios:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Cardapio',
+        require: true,
     
     }],
     formapagamento: {

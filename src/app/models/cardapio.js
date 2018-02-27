@@ -1,12 +1,12 @@
 const mongoose = require("../../database");
 
-const CardapioSchema = new mangoose.Schema({
+const CardapioSchema = new mongoose.Schema({
     nomeprato:{
         type: String,
         required: true,
     },
     valor:{
-        type: Number,
+        type: String,
         required: false,
 
     },
@@ -16,12 +16,13 @@ const CardapioSchema = new mangoose.Schema({
     },
     barraca:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Barraca,
+        ref: 'Barraca',
+        require: true,
 
     },
     
     
 });
 
-const Cardapio = mongoose.model('Carcapio', CardapioSchema);
+const Cardapio = mongoose.model('Cardapio', CardapioSchema);
 module.exports = Cardapio;
