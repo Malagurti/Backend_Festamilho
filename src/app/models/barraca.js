@@ -2,7 +2,11 @@ const mongoose = require("../../database");
 
 const BarracaSchema = new mongoose.Schema({
 
-  
+    usuario:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Usuario',
+        require: true,
+    },
     nome:{
         type: String,
         required: true,
@@ -28,11 +32,12 @@ const BarracaSchema = new mongoose.Schema({
         required: true,
     },
 
-    cardapio:{
-        type: String,
-       
-    },
-    formapagamento:{
+    cardapio:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Cardapio',
+    
+    }],
+    formapagamento: {
         type: String,
         required: true,
     },

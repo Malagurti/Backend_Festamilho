@@ -72,7 +72,7 @@ router.post('/recuperasenha', async (req ,res)=> {
 
         const token = crypto.randomBytes(20).toString('hex');
         const now = new Date();
-        now.setHours(now.getHours() + 1);
+        now.setHours(now.getHours() + 5);
 
         await Usuario.findByIdAndUpdate(usuario.id, {
             '$set': {
