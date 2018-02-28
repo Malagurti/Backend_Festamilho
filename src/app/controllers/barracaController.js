@@ -1,11 +1,13 @@
 const express = require('express');
 
+const Usuario = require('../models/Usuario');
 const Barraca = require('../models/Barraca');
 const Cardapio = require('../models/Cardapio');
 const authMiddleware = require('../middlewares/auth');
 
 
 const router = express.Router();
+const usuarioNivel = Usuario.nivel;
 
 router.use(authMiddleware);
 
@@ -34,6 +36,7 @@ router.get('/:barracaId', async ( req, res) => {
 });
 
 router.post('/', async ( req, res) => {
+    
     try {
       const {nome, curso, semestre, periodo, localizacao, formapagamento, cardapios} = req.body;
 
@@ -61,7 +64,9 @@ router.post('/', async ( req, res) => {
 });
 
 router.put('/:barracaId', async ( req, res) => {
-    try {
+   
+      try {
+
         const {nome, curso, semestre, periodo, localizacao, formapagamento, cardapios} = req.body;
   
         const barraca = await Barraca.findByIdAndUpdate(req.params.barracaId,{
