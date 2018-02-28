@@ -1,12 +1,12 @@
 const express = require('express');
 
-const Usuario = require('../models/Usuario');
+const Usuario = require('../../app/models/Usuario');
 const Barraca = require('../models/Barraca');
 const Cardapio = require('../models/Cardapio');
 const authMiddleware = require('../middlewares/auth');
 
-
 const router = express.Router();
+
 
 router.use(authMiddleware);
 
@@ -24,9 +24,10 @@ router.get('/', async ( req,res) => {
 
 router.get('/:barracaId', async ( req, res) => {
     try {
-        const barraca = await Barraca.findById(req.params.barracaId).populate(['usuario', 'cardapios']);
-   
-        return res.send([ barraca ]);
+
+      const barraca = await Barraca.findById(req.params.barracaId).populate(['usuario', 'cardapios']);
+
+      return res.send([ barraca ]);
        
       } catch (err) {
         return res.status(400).send({error: "Erro ao carregar Barraca"});
@@ -35,9 +36,13 @@ router.get('/:barracaId', async ( req, res) => {
 });
 
 router.post('/', async ( req, res) => {
-    
+
     try {
       const {nome, curso, semestre, periodo, localizacao, formapagamento, cardapios} = req.body;
+
+      if (await Barraca.findOne({ nome }))
+          return res.status(400).send({error: 'Barraca ja Cadastrada'});
+
 
       const barraca = await Barraca.create({nome, curso, semestre, periodo, localizacao, formapagamento, usuario: req.usuarioId});
       
@@ -95,7 +100,7 @@ router.put('/:barracaId', async ( req, res) => {
           
       } catch (err) {
         console.log(err);
-        return res.status(400).send({error: "Erro de cadastro de barraca"})
+        return res.status(400).send({error: "Erro de Atuzalização de barraca"})
           
       };
 });
@@ -104,7 +109,7 @@ router.delete('/:barracaId', async ( req, res) => {
     try {
         await Barraca.findByIdAndRemove(req.params.barracaId);
    
-        return res.send();
+        return res.send("Barraca Excluida com sucesso");
 
       } catch (err) {
         return res.status(400).send({error: "Erro ao deletar a barraca"});
