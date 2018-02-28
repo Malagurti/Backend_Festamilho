@@ -7,7 +7,6 @@ const authMiddleware = require('../middlewares/auth');
 
 
 const router = express.Router();
-const usuarioNivel = Usuario.nivel;
 
 router.use(authMiddleware);
 
