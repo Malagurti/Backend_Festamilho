@@ -8,6 +8,8 @@ const authConfig = require('../../config/auth.json');
 const Usuario = require('../../app/models/Usuario');
 const router = express.Router();
 
+router.use(cors());
+
 
 
 function tokengen(params = {}){
