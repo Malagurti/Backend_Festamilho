@@ -15,7 +15,7 @@ router.use(cors());
 
 function tokengen(params = {}){
    return jwt.sign( params, authConfig.secret, {
-        expiresIn: 40000,
+        expiresIn: 40000000000,
    });
 };
 
