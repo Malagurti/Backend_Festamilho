@@ -6,6 +6,10 @@ Banco de dados => MongoDB:
 Porta do Banco => 27017:
 Porta do Backend => 4000;
 
+Gerenciador de pacotes utilizado: Yarn.
+
+Para instalar todas as dependencias basta entrar na pasta raiz do projeto e digitar yarn após ter feito sua instalação.
+
 Rotas:
 
 Cadastro de usuario
