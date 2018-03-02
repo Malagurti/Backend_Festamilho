@@ -40,7 +40,13 @@ Atualizar uma barraca
 http://localhost:4000/barraca/barracaId => Put
 
 Deletar uma barraca
-http://localhost:4000/barracaId => Delete
+http://localhost:4000/barraca/barracaId => Delete
+
+Listar todos os Cardapios
+http://localhost:4000/cardapio => Get
+
+Listar um cardapio por Ip
+http://localhost:4000/cardapio/cardapioId => get
 
 
 
