@@ -1,5 +1,5 @@
 const express = require('express');
-
+const cors = require('cors');
 const Usuario = require('../../app/models/Usuario');
 const Barraca = require('../models/Barraca');
 const Cardapio = require('../models/Cardapio');
@@ -9,6 +9,7 @@ const router = express.Router();
 
 
 router.use(authMiddleware);
+router.use(cors());
 
 router.get('/', async ( req,res) => {
    try {
