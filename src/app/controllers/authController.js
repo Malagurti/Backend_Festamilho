@@ -91,19 +91,18 @@ router.post('/recuperasenha', async (req, res) => {
       },
     });
 
-    mailer.sendMail({
+    mailer.sendMail ({
       to: email,
       from: 'danielmalagurti@gmail.com',
       template: 'auth/recupera_senha',
       context: { token },
     }, (err) => {
-      if (err) {
-         {return res.status(400).send({error: 'Não foi possivel enviar o e-mail de recuperação'});}
+      if (err)
+         return res.status(400).send({ error: 'Não foi possivel enviar o e-mail de recuperação' });
 
       return res.send();
   })
-
-    } catch (err) {
+} catch (err) {
 
         res.status(400).send({error: 'Erro na recuperação da senha, tente novamente'});
 
