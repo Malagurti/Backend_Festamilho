@@ -8,12 +8,12 @@ const router = express.Router();
 router.get('/', async ( req,res) => {
     try {
       const cardapios = await Cardapio.find().populate([ 'cardapios' ]);
- 
-      return res.send([ cardapios ]);
-     
+
+      return res.send( cardapios );
+
     } catch (err) {
       return res.status(400).send({error: "Erro ao carregar o cardapio"});
-        
+
     }
  });
 
@@ -25,10 +25,10 @@ router.get('/', async ( req,res) => {
       const cardapio = await Cardapio.findById(req.params.cardapioId).populate( ['cardapio', 'barraca'] );
 
       return res.send([ cardapio ]);
-       
+
       } catch (err) {
         return res.status(400).send({error: "Erro ao carregar cardapio"});
-          
+
       }
 });
 
