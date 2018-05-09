@@ -1,17 +1,15 @@
 const mongoose = require("../../database");
 
-const AvaliacaoSchema = new mogoose.Schema({
-    usuario:{
-        type: String,
-        required: true,
+const AvaliacaoSchema = new mongoose.Schema({
+    barraca:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Barraca',
     },
     data:{
         type: Date,
-        required: true,
     },
     nota:{
         type: Number,
-        required: true,
     }
 
 

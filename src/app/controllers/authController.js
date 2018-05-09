@@ -8,15 +8,13 @@ const crypto = require('crypto');
 
 const mailer = require('../../modules/mailer');
 
-const cors = require('cors');
-
 const authConfig = require('../../config/auth.json');
 
 const Usuario = require('../../app/models/Usuario');
 
 const router = express.Router();
 
-router.use(cors());
+
 
 
 

@@ -42,6 +42,11 @@ const BarracaSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    votacao:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Avaliacao',
+        require: true,
+    }]
 
 });
 
