@@ -48,6 +48,12 @@ http://localhost:4000/cardapio => Get
 Listar um cardapio por Ip
 http://localhost:4000/cardapio/cardapioId => get
 
+Votar
+http://localhost:4000/votacao => post
+
+
+
+
 
 
 
