@@ -7,6 +7,7 @@ const AvaliacaoSchema = new mongoose.Schema({
     },
     data:{
         type: Date,
+        default: Date.now
     },
     nota:{
         type: Number,

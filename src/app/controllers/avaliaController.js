@@ -10,29 +10,50 @@ router.use(authMiddleware);
 
 
 
-router.get('/:barracaId', async ( req, res) => {
-    try {
-
-      const avaliacao = await Avalicao.findById(req.params.barracaId).populate(['nota','barraca','data']);
-
-      return res.send( [ avaliacao ]);
-
-      } catch (err) {
-        return res.status(400).send({error: "Erro ao carregar avaliacao"});
-
+router.get('/:barracaId', async (req, res, next) => {
+  Avaliacao.aggregate([
+    { "barracaId": "$barraca" },
+    {
+      "$group": {
+        "_id": "$barraca",
+        "notaAvg": { "$avg": "$nota" }
       }
+    }
+  ], function (err, results) {
+    if (err) res.status(500).json({ errors: [error] })
+    Barraca.populate(results, { "path": "_id" },
+      function (err, result) {
+        if (err) res.status(500).json({ errors: [error] })
+          res.json(result)
+      });
+  })
 });
 
-router.post('/', async ( req, res) => {
+router.get("/:barracaId", function(req, res){
+  Barraca.findById(req.params.barracaId).populate("votacao").exec(function(err, showBarraca){
+     if(err){
+        res.status(500).json({ errors: [error] })
+     } else{
+         var total = 0;
+         for(var i = 0; i < showBarraca.votacao.length; i++) {
+             total += showBarraca.votacao[i].nota;
+         }
+         var avg = total / showBarraca.votacao.lenght;
+         res.json(avg);
+     }
+  }); 
+});
+
+router.post('/', async (req, res) => {
 
     try {
-      const {barraca,nota,data} = req.body;
+      const { barraca, nota, data } = req.body;
 
       if (await Avaliavao.findOne({ data }))
-          return res.status(400).send({error: 'Voce ja votou hoje'});
+        return res.status(400).send({ error: 'Voce ja votou hoje' });
 
 
-      const avaliacao = await Avaliacao.create({nota,data, barraca: req.barracaId});
+      const avaliacao = await Avaliacao.create({ nota, data, barraca: req.barracaId });
 
       await avaliazao.save();
 
@@ -40,11 +61,11 @@ router.post('/', async ( req, res) => {
 
     } catch (err) {
       console.log(err);
-      return res.status(400).send({error: "Erro ao realizar a votacao"})
+      return res.status(400).send({ error: "Erro ao realizar a votacao" })
 
     };
 
-});
+  });
 
 
-module.exports  = app => app.use('/votacao', router);
+  module.exports = app => app.use('/votacao', router);
